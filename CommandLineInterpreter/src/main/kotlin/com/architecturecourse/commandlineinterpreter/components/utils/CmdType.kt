@@ -13,6 +13,9 @@ sealed interface CmdType {
     object Wc : CmdType {
         const val TAG = "wc"
     }
+    object Exit : CmdType {
+        const val TAG = "exit"
+    }
     object Unknown : CmdType
     object Assign : CmdType
 }

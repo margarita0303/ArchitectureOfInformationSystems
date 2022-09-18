@@ -3,6 +3,9 @@ package com.architecturecourse.commandlineinterpreter.components.lexer
 import Lexer
 import com.architecturecourse.commandlineinterpreter.components.utils.CmdCategory
 import com.architecturecourse.commandlineinterpreter.components.utils.Token
+import com.architecturecourse.commandlineinterpreter.components.utils.error.EmptyInputError
+import com.architecturecourse.commandlineinterpreter.components.utils.error.FirstTokenError
+import com.architecturecourse.commandlineinterpreter.components.utils.error.QuotesError
 
 class LexerImpl : Lexer {
     override fun lex(input: String): Pair<List<Token>, CmdCategory> {
@@ -12,7 +15,7 @@ class LexerImpl : Lexer {
 
     private fun processLex(input: String, removeQuotes: Boolean): Pair<List<String>, CmdCategory> {
         if (input.isEmpty())
-            throw Error("Empty input.")
+            throw EmptyInputError
         val splitByAssign = splitOutsideQuotes(input, ASSIGN_SYMBOL, onlyFirst = true, removeQuotes = removeQuotes)
         if (splitByAssign.size == 2) {
             checkFirstToken(splitByAssign)
@@ -67,7 +70,7 @@ class LexerImpl : Lexer {
             }
         }
         if (isSingleQuoteOpen || isDoubleQuoteOpen)
-            throw Error("Quotes not closed.")
+            throw QuotesError
 
         if (curToken.isNotEmpty())
             tokens.add(curToken.toString())
@@ -77,7 +80,7 @@ class LexerImpl : Lexer {
 
     private fun checkFirstToken(tokens: List<String>) {
         if (tokens.first().any { c -> c == ASSIGN_SYMBOL || c == WHITE_SPACE })
-            throw Error("First token contains invalid symbols.")
+            throw FirstTokenError
     }
 
 

@@ -3,8 +3,12 @@ package com.architecturecourse.commandlineinterpreter
 import com.architecturecourse.commandlineinterpreter.components.lexer.LexerImpl
 import com.architecturecourse.commandlineinterpreter.components.utils.CmdCategory
 import com.architecturecourse.commandlineinterpreter.components.utils.Token
+import com.architecturecourse.commandlineinterpreter.components.utils.error.EmptyInputError
+import com.architecturecourse.commandlineinterpreter.components.utils.error.FirstTokenError
+import com.architecturecourse.commandlineinterpreter.components.utils.error.QuotesError
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
@@ -20,11 +24,7 @@ class LexerTests {
     @Test
     fun testLexAssignInvalid() {
         val input = "'a ba'='hello'"
-        try {
-            LexerImpl().lex(input)
-        } catch (e: Throwable) {
-            assertEquals("First token contains invalid symbols.", e.message)
-        }
+        assertThrows<FirstTokenError> { LexerImpl().lex(input) }
     }
 
     @Test
@@ -42,10 +42,18 @@ class LexerTests {
     @Test
     fun testLexInvokeInvalid() {
         val input = "'p wd' 'hello=poll' 'okokok'"
-        try {
-            LexerImpl().lex(input)
-        } catch (e: Throwable) {
-            assertEquals("First token contains invalid symbols.", e.message)
-        }
+        assertThrows<FirstTokenError> { LexerImpl().lex(input) }
+    }
+
+    @Test
+    fun testQuotesAreNotClosed() {
+        val input = "echo \'file.txt"
+        assertThrows<QuotesError> { LexerImpl().lex(input) }
+    }
+
+    @Test
+    fun testEmptyInput() {
+        val input = ""
+        assertThrows<EmptyInputError> { LexerImpl().lex(input) }
     }
 }
