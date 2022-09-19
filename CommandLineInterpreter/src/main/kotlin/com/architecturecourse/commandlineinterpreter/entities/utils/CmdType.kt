@@ -16,6 +16,8 @@ sealed interface CmdType {
     object Exit : CmdType {
         const val TAG = "exit"
     }
+    object Assign : CmdType {
+        const val TAG = "=";
+    }
     object Unknown : CmdType
-    object Assign : CmdType
 }
