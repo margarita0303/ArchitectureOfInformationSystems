@@ -1,11 +1,11 @@
 package com.architecturecourse.commandlineinterpreter
 
-import com.architecturecourse.commandlineinterpreter.components.lexer.LexerImpl
-import com.architecturecourse.commandlineinterpreter.components.utils.CmdCategory
-import com.architecturecourse.commandlineinterpreter.components.utils.Token
-import com.architecturecourse.commandlineinterpreter.components.utils.error.EmptyInputError
-import com.architecturecourse.commandlineinterpreter.components.utils.error.FirstTokenError
-import com.architecturecourse.commandlineinterpreter.components.utils.error.QuotesError
+import com.architecturecourse.commandlineinterpreter.entities.lexer.LexerImpl
+import com.architecturecourse.commandlineinterpreter.entities.utils.CmdCategory
+import com.architecturecourse.commandlineinterpreter.entities.utils.Token
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.EmptyInputError
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.FirstTokenError
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.QuotesError
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
