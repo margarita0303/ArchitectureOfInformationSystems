@@ -1,11 +1,11 @@
 package com.architecturecourse.commandlineinterpreter
 
-import com.architecturecourse.commandlineinterpreter.components.parser.ParserImpl
-import com.architecturecourse.commandlineinterpreter.components.utils.Arg
-import com.architecturecourse.commandlineinterpreter.components.utils.CmdCategory
-import com.architecturecourse.commandlineinterpreter.components.utils.CmdType
-import com.architecturecourse.commandlineinterpreter.components.utils.Token
-import com.architecturecourse.commandlineinterpreter.components.utils.error.EmptyTokenListError
+import com.architecturecourse.commandlineinterpreter.entities.parser.ParserImpl
+import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
+import com.architecturecourse.commandlineinterpreter.entities.utils.CmdCategory
+import com.architecturecourse.commandlineinterpreter.entities.utils.CmdType
+import com.architecturecourse.commandlineinterpreter.entities.utils.Token
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.EmptyTokenListError
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
