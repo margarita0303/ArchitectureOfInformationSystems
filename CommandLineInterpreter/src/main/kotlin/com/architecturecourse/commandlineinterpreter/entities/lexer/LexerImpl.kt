@@ -1,29 +1,28 @@
 package com.architecturecourse.commandlineinterpreter.entities.lexer
 
-import com.architecturecourse.commandlineinterpreter.entities.utils.CmdCategory
+import com.architecturecourse.commandlineinterpreter.entities.utils.CmdType
 import com.architecturecourse.commandlineinterpreter.entities.utils.Token
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.EmptyInputError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FirstTokenError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.QuotesError
 
 class LexerImpl : Lexer {
-    override fun lex(input: String): Pair<List<Token>, CmdCategory> {
-        val (tokens, cat) = processLex(input, removeQuotes = true)
-        return tokens.map { Token(it) } to cat
+    override fun lexInput(input: String): List<Token> {
+        return processLex(input, removeQuotes = true).map { Token(it) }
     }
 
-    private fun processLex(input: String, removeQuotes: Boolean): Pair<List<String>, CmdCategory> {
+    private fun processLex(input: String, removeQuotes: Boolean): List<String> {
         if (input.isEmpty()) throw EmptyInputError
         val splitByAssign = splitOutsideQuotes(input, ASSIGN_SYMBOL, onlyFirst = true, removeQuotes = removeQuotes)
         if (splitByAssign.size == 2) {
             checkFirstToken(splitByAssign)
-            return splitByAssign to CmdCategory.Assign
+            return listOf(CmdType.Assign.TAG) + splitByAssign
         }
         val splitBySpace = splitOutsideQuotes(
             input, WHITE_SPACE, onlyFirst = false, removeQuotes = removeQuotes
         )
         checkFirstToken(splitBySpace)
-        return splitBySpace to CmdCategory.Invoke
+        return splitBySpace
     }
 
     private fun splitOutsideQuotes(s: String, delim: Char, onlyFirst: Boolean, removeQuotes: Boolean): List<String> {
