@@ -12,25 +12,27 @@ import java.io.File
 @SpringBootTest
 class CommandTests {
 
+    var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
+
     /* Testing command echo - must display the entered argument (or arguments) */
     @Test
     fun testExecuteEchoValid() {
         val args = arrayOf("hello", "world")
         val cmdEcho = CommandFactoryImpl().createCommand("echo", args)
-        val exp = "hello world"
+        val expected = "hello world"
         val actual = cmdEcho.execute(mutableMapOf())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command cat [FILE] - must display the contents of the file */
     @Test
     fun testExecuteCatValid() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTests.txt"
+        val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path)
         val cmdCat = CommandFactoryImpl().createCommand("cat", args)
-        val exp = "Hello everyone\n" + "How are you?"
+        val expected = "Hello everyone\n" + "How are you?"
         val actual = cmdCat.execute(mutableMapOf())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command pwd - must print current directory */
@@ -38,20 +40,20 @@ class CommandTests {
     fun testExecutePwdValid() {
         val args = arrayOf<String>()
         val cmdPwd = CommandFactoryImpl().createCommand("pwd", args)
-        val exp = File("").absolutePath
+        val expected = File("").absolutePath
         val actual = cmdPwd.execute(mutableMapOf())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command wc [FILE] - must print the number of lines, words and bytes in a file */
     @Test
     fun testExecuteWcValid() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTests.txt"
+        val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path)
         val cmdWc = CommandFactoryImpl().createCommand("wc", args)
-        val exp = "lines: 2, words: 5, bytes: 27"
+        val expected = "lines: 2, words: 5, bytes: 27"
         val actual = cmdWc.execute(mutableMapOf())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command exit - must throw ExitError */
@@ -67,7 +69,7 @@ class CommandTests {
     /* If the file does not exist execute() must throw FileError */
     @Test
     fun testExecuteCatWrongFile() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/aaaa.txt"
+        val path = pathToTestDirectory + "WrongFileName.txt"
         val args = arrayOf(path)
         val cmdCat = CommandFactoryImpl().createCommand("cat", args)
         assertThrows<FileError> { cmdCat.execute(mutableMapOf()) }
@@ -76,7 +78,7 @@ class CommandTests {
     /* If the file does not exist execute() must throw FileError */
     @Test
     fun testExecuteWcWrongFile() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTestss.txt"
+        val path = pathToTestDirectory + "WrongFileName.txt"
         val args = arrayOf(path)
         val cmdWc = CommandFactoryImpl().createCommand("wc", args)
         assertThrows<FileError> { cmdWc.execute(mutableMapOf()) }

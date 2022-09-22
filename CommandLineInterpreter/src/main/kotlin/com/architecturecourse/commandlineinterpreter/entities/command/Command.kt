@@ -8,10 +8,7 @@ import java.io.File
 import java.io.FileReader
 
 
-class Command(_commandType: String, _args: Array<String>) {
-
-    private val commandType = _commandType
-    private val args = _args
+class Command(private val commandType: String, private val args: Array<String>) {
 
     /* Execute command */
     fun execute(variables: MutableMap<String, String>): String {
