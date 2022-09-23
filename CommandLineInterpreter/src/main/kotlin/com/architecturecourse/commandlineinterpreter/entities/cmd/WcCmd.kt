@@ -1,0 +1,29 @@
+package com.architecturecourse.commandlineinterpreter.entities.cmd
+
+import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+
+/* wc [FILE] - print the number of lines, words and bytes in a file */
+class WcCmd(override val args: List<String>) : Cmd {
+    override val numberOfArgs: Int = 1
+    override fun execute(context: VariableContext): Pair<String, Int> {
+        val path = args[0]
+        val file = File(path)
+        try {
+            val reader = BufferedReader(FileReader(File(path), Charsets.UTF_8))
+            var lines = 0
+            var words = 0
+            val bytes = file.length()
+            for (line in reader.lines()) {
+                lines++
+                words += line.split(" ").size
+            }
+            return "lines: $lines, words: $words, bytes: $bytes" to 0
+        } catch (e: Exception) {
+            throw FileError
+        }
+    }
+}
