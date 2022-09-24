@@ -1,4 +1,4 @@
-package com.architecturecourse.commandlineinterpreter.entities.cmd
+package com.architecturecourse.commandlineinterpreter.entities.command
 
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.ExitError

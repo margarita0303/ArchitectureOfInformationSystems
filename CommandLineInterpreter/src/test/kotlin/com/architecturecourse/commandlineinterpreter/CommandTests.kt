@@ -1,7 +1,6 @@
 package com.architecturecourse.commandlineinterpreter
 
 import com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactoryImpl
-import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CmdType
@@ -19,25 +18,27 @@ class CommandTests {
     private val isWindows = System.getProperty("os.name")
         .lowercase(Locale.getDefault()).startsWith("windows")
 
+    var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
+
     /* Testing command echo - must display the entered argument (or arguments) */
     @Test
     fun testExecuteEchoValid() {
         val args = arrayOf("hello", "world").map { Arg(it) }
         val cmdEcho = CommandFactoryImpl().createCommand(CmdType.Echo, args)
-        val exp = "hello world" to 0
+        val expected = "hello world" to 0
         val actual = cmdEcho.execute(VariableContextImpl())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command cat [FILE] - must display the contents of the file */
     @Test
     fun testExecuteCatValid() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTests.txt"
+        val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdCat = CommandFactoryImpl().createCommand(CmdType.Cat, args)
-        val exp = "Hello everyone\n" + "How are you?" to 0
+        val expected = "Hello everyone\n" + "How are you?" to 0
         val actual = cmdCat.execute(VariableContextImpl())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command pwd - must print current directory */
@@ -45,20 +46,20 @@ class CommandTests {
     fun testExecutePwdValid() {
         val args = listOf<Arg>()
         val cmdPwd = CommandFactoryImpl().createCommand(CmdType.Pwd, args)
-        val exp = File("").absolutePath to 0
+        val expected = File("").absolutePath to 0
         val actual = cmdPwd.execute(VariableContextImpl())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command wc [FILE] - must print the number of lines, words and bytes in a file */
     @Test
     fun testExecuteWcValid() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTests.txt"
+        val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdWc = CommandFactoryImpl().createCommand(CmdType.Wc, args)
-        val exp = "lines: 2, words: 5, bytes: 27" to 0
+        val expected = "lines: 2, words: 5, bytes: 27" to 0
         val actual = cmdWc.execute(VariableContextImpl())
-        Assertions.assertEquals(exp, actual)
+        Assertions.assertEquals(expected, actual)
     }
 
     /* Testing command exit - must throw ExitError */
@@ -74,7 +75,7 @@ class CommandTests {
     /* If the file does not exist execute() must throw FileError */
     @Test
     fun testExecuteCatWrongFile() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/aaaa.txt"
+        val path = pathToTestDirectory + "WrongFileName.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdCat = CommandFactoryImpl().createCommand(CmdType.Cat, args)
         assertThrows<FileError> { cmdCat.execute(VariableContextImpl()) }
@@ -83,7 +84,7 @@ class CommandTests {
     /* If the file does not exist execute() must throw FileError */
     @Test
     fun testExecuteWcWrongFile() {
-        val path = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/ForCommandTestss.txt"
+        val path = pathToTestDirectory + "WrongFileName.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdWc = CommandFactoryImpl().createCommand(CmdType.Wc, args)
         assertThrows<FileError> { cmdWc.execute(VariableContextImpl()) }
@@ -95,8 +96,8 @@ class CommandTests {
         if (isWindows) {
             val args = listOf("echo", "42").map { Arg(it) }
             val cmdUnk = CommandFactoryImpl().createCommand(CmdType.Unknown, args)
-            val exp = "42" to 0
-            Assertions.assertEquals(exp, cmdUnk.execute(VariableContextImpl()))
+            val expected = "42" to 0
+            Assertions.assertEquals(expected, cmdUnk.execute(VariableContextImpl()))
         }
     }
 }

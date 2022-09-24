@@ -1,6 +1,6 @@
 package com.architecturecourse.commandlineinterpreter.entities.commandfactory
 
-import com.architecturecourse.commandlineinterpreter.entities.cmd.*
+import com.architecturecourse.commandlineinterpreter.entities.command.*
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CmdType
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.WrongNumberOfArgumentsError
