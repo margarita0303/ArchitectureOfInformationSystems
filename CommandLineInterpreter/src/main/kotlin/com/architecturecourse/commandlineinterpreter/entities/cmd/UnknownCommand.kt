@@ -8,7 +8,7 @@ import java.util.*
 import java.util.concurrent.Executors
 
 /* If something is entered that the interpreter does not know, call an external program */
-class UnknownCmd(override val args: List<String>) : Cmd {
+class UnknownCommand(private val args: List<String>) : Command {
     override val numberOfArgs: Int? = null
     override fun execute(context: VariableContext): Pair<String, Int> {
         val isWindows = System.getProperty("os.name")
@@ -23,17 +23,16 @@ class UnknownCmd(override val args: List<String>) : Cmd {
         }
 
         val output = mutableListOf<String?>()
-        val streamGobbler = StreamGobbler(process.inputStream, output)
-        val future = Executors.newSingleThreadExecutor().submit(streamGobbler)
+        val resultHandler = ResultHandler(process.inputStream, output)
+        val future = Executors.newSingleThreadExecutor().submit(resultHandler)
 
         val exitCode = process.waitFor()
-        assert(exitCode == 0)
 
         future.get()
-        return output.joinToString("\n") to 0
+        return output.joinToString("\n") to exitCode
     }
 
-    private class StreamGobbler(private val inputStream: InputStream, consumer: MutableList<String?>) :
+    private class ResultHandler(private val inputStream: InputStream, consumer: MutableList<String?>) :
         Runnable {
         private val consumer: MutableList<String?>
 

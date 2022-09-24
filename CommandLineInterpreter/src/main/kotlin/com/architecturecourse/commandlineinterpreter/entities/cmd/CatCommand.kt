@@ -7,7 +7,7 @@ import java.io.File
 import java.io.FileReader
 
 /* cat [FILE] - display the contents of the file */
-class CatCmd(override val args: List<String>) : Cmd {
+class CatCommand(private val args: List<String>) : Command {
     override val numberOfArgs: Int = 1
 
     override fun execute(context: VariableContext): Pair<String, Int> {
