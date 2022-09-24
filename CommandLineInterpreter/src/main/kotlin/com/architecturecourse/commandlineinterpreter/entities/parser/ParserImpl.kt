@@ -19,7 +19,7 @@ class ParserImpl : Parser {
             CmdType.Wc.TAG -> CmdType.Wc to args
             CmdType.Exit.TAG -> CmdType.Exit to args
             CmdType.Assign.TAG -> CmdType.Assign to args
-            else -> CmdType.Unknown to args
+            else -> CmdType.Unknown to listOf(Arg(tokens.first().s)) + args
         }
     }
 }
