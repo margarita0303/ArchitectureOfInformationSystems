@@ -1,3 +1,3 @@
 package com.architecturecourse.commandlineinterpreter.entities.utils
 
-data class Token(val data: String)
+data class CommandData(val type: CommandType, val args: List<Arg>)

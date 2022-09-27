@@ -1,6 +1,6 @@
 package com.architecturecourse.commandlineinterpreter.entities.lexer
 
-import com.architecturecourse.commandlineinterpreter.entities.utils.CmdType
+import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import com.architecturecourse.commandlineinterpreter.entities.utils.Token
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.EmptyInputError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FirstTokenError
@@ -16,7 +16,7 @@ class LexerImpl : Lexer {
         val splitByAssign = splitOutsideQuotes(input, ASSIGN_SYMBOL, onlyFirst = true, removeQuotes = removeQuotes)
         if (splitByAssign.size == 2) {
             checkFirstToken(splitByAssign)
-            return listOf(CmdType.Assign.TAG) + splitByAssign
+            return listOf(CommandType.Assign.TAG) + splitByAssign
         }
         val splitBySpace = splitOutsideQuotes(
             input, WHITE_SPACE, onlyFirst = false, removeQuotes = removeQuotes

@@ -1,7 +1,8 @@
 package com.architecturecourse.commandlineinterpreter.entities.userinterface
 
-class UserInterface {
-    fun getUserName(): String {
-        return "For testing purposes"
-    }
+interface UserInterface {
+
+    fun input(): String
+
+    fun output(string: String)
 }
