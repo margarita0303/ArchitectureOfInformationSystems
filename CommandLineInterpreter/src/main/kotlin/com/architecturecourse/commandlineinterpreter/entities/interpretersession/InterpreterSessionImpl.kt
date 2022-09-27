@@ -15,12 +15,16 @@ class InterpreterSessionImpl(
 ) : InterpreterSession {
     override fun launch() {
         while (true) {
-            val data = userInterface.input()
-            val tokens = tokenizer.tokenize(data)
-            val commandData = parser.parse(tokens)
-            val command = commandFactory.createCommand(commandData)
-            val result = commandInterpreter.runCommand(command)
-            userInterface.output(result)
+            try {
+                val data = userInterface.input()
+                val tokens = tokenizer.tokenize(data)
+                val commandData = parser.parse(tokens)
+                val command = commandFactory.createCommand(commandData)
+                val result = commandInterpreter.runCommand(command)
+                userInterface.output(result.toString())
+            } catch (e: Exception) {
+                println("Something went wrong ${e.message}")
+            }
             // TODO: We need to add better output and maybe pass "onOutput" callback
             //       to executor to allow to write during execution
         }
