@@ -5,6 +5,7 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandData
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 
+/* Creates Command instance by input CommandType */
 interface CommandFactory {
     fun createCommand(commandType: CommandType, args: List<Arg>): Command
 

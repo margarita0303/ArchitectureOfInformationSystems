@@ -2,6 +2,7 @@ package com.architecturecourse.commandlineinterpreter.entities.commandinterprete
 
 import com.architecturecourse.commandlineinterpreter.entities.command.Command
 
+/* Executes command */
 interface CommandInterpreter {
     fun runCommand(command: Command): Pair<String, Int>
 }
