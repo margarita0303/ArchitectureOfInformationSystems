@@ -1,11 +1,10 @@
 package com.architecturecourse.commandlineinterpreter.entities.command
 
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.ExternalCommandError
 import java.io.BufferedReader
-import java.io.InputStream
 import java.io.InputStreamReader
 import java.util.*
-import java.util.concurrent.Executors
 
 /* If something is entered that the interpreter does not know, call an external program */
 class UnknownCommand(private val args: List<String>) : Command {
@@ -22,26 +21,12 @@ class UnknownCommand(private val args: List<String>) : Command {
                 .exec(java.lang.String.format("sh -c ${args.joinToString(separator = " ")}"))
         }
 
-        val output = mutableListOf<String?>()
-        val resultHandler = ResultHandler(process.inputStream, output)
-        val future = Executors.newSingleThreadExecutor().submit(resultHandler)
-
+        val output = BufferedReader(InputStreamReader(process.inputStream)).lines().toList()
         val exitCode = process.waitFor()
-
-        future.get()
-        return output.joinToString("\n") to exitCode
-    }
-
-    private class ResultHandler(private val inputStream: InputStream, consumer: MutableList<String?>) :
-        Runnable {
-        private val consumer: MutableList<String?>
-
-        init {
-            this.consumer = consumer
+        if(exitCode != 0) {
+            val error = BufferedReader(InputStreamReader(process.errorStream)).lines().toList()
+            throw ExternalCommandError(error.joinToString(separator = "\n"), exitCode)
         }
-
-        override fun run() {
-            BufferedReader(InputStreamReader(inputStream)).lines().forEach { consumer.add(it) }
-        }
+        return output.joinToString(separator = "\n") to 0
     }
 }

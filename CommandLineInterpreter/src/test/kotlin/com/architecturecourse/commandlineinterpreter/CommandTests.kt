@@ -4,7 +4,7 @@ import com.architecturecourse.commandlineinterpreter.entities.commandfactory.Com
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
-import com.architecturecourse.commandlineinterpreter.entities.utils.error.ExitError
+import com.architecturecourse.commandlineinterpreter.entities.utils.exit.ExitInterruption
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
@@ -65,7 +65,7 @@ class CommandTests {
     fun testExecuteExitValid() {
         val args = listOf<Arg>()
         val cmdExit = CommandFactoryImpl().createCommand(CommandType.Exit, args)
-        assertThrows<ExitError> { cmdExit.execute(VariableContextImpl()) }
+        assertThrows<ExitInterruption> { cmdExit.execute(VariableContextImpl()) }
     }
 
     /* Testing errors */
