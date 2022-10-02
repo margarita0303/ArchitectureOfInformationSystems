@@ -13,7 +13,7 @@ class InterpreterSessionImpl(
     private val commandFactory: CommandFactory,
     private val commandInterpreter: CommandInterpreter,
     private val tokenizer: Tokenizer,
-    private val parser: Parser
+    private val parser: Parser,
 ) : InterpreterSession {
     override fun launch() {
         while (true) {
@@ -24,7 +24,11 @@ class InterpreterSessionImpl(
                 val commands = commandDataList.map {
                     commandFactory.createCommand(it)
                 }
-                val (result, _) = commandInterpreter.runCommand(commands.first())
+                var result = ""
+                for (i in commands.indices) {
+                    val outData = commandInterpreter.runCommand(commands[i], result)
+                    result = outData.first
+                }
                 userInterface.output(result)
             } catch (e: Throwable) {
                 when (e) {

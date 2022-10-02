@@ -5,6 +5,7 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileEr
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
+import java.util.*
 
 /* cat [FILE] - display the contents of the file */
 class CatCommand(private val args: List<String>) : Command {
@@ -17,6 +18,14 @@ class CatCommand(private val args: List<String>) : Command {
                 .joinToString(separator = "\n").trim() to 0
         } catch (e: Exception) {
             throw FileError
+        }
+    }
+
+    override fun execute(context: VariableContext, input: Optional<String>): Pair<String, Int> {
+        return if (input.isEmpty) {
+            execute(context)
+        } else {
+            input.get() to 0
         }
     }
 }
