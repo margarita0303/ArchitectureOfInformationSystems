@@ -42,7 +42,7 @@ class CommandFactoryImpl : CommandFactory {
             }
 
             CommandType.Unknown -> UnknownCommand(args.map { it.data })
-            CommandType.Assign -> TODO("Do in next hw")
+            CommandType.Assign -> TODO("Implement in the next homework")
         }
     }
 

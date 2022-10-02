@@ -20,21 +20,22 @@ class InterpreterSessionImpl(
             try {
                 val data = userInterface.input()
                 val tokens = tokenizer.tokenize(data)
-                val commandData = parser.parse(tokens)
-                // временно, пока CommandFactory не готова
-                val command = commandFactory.createCommand(commandData.first())
-                val (result, _) = commandInterpreter.runCommand(command)
+                val commandDataList = parser.parse(tokens)
+                val commands = commandDataList.map {
+                    commandFactory.createCommand(it)
+                }
+                val (result, _) = commandInterpreter.runCommand(commands.first())
                 userInterface.output(result)
             } catch (e: Throwable) {
                 when (e) {
                     ExitInterruption -> return
                     is CLIError -> {
-                        println("Something went wrong: ${e.message}")
-                        println("Process finished with exit code ${e.code}.")
+                        userInterface.output("Something went wrong: ${e.message}")
+                        userInterface.output("Process finished with exit code ${e.code}.")
                     }
                     else -> {
-                        println("Something went wrong: ${e.message})")
-                        println("Process finished with exit code $NOT_CLI_ERROR_CODE.")
+                        userInterface.output("Something went wrong: ${e.message})")
+                        userInterface.output("Process finished with exit code $NOT_CLI_ERROR_CODE.")
                     }
                 }
             }
