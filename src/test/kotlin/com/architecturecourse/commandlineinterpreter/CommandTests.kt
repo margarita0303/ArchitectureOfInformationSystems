@@ -23,7 +23,7 @@ class CommandTests {
     fun testExecuteEchoValid() {
         val args = arrayOf("hello", "world").map { Arg(it) }
         val cmdEcho = CommandFactoryImpl().createCommand(CommandType.Echo, args)
-        val expected = "hello world" to 0
+        val expected = Optional.of("hello world") to 0
         val actual = cmdEcho.execute(VariableContextImpl())
         Assertions.assertEquals(expected, actual)
     }
@@ -34,7 +34,7 @@ class CommandTests {
         val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdCat = CommandFactoryImpl().createCommand(CommandType.Cat, args)
-        val expected = "Hello everyone" to 0
+        val expected = Optional.of("Hello everyone") to 0
         val actual = cmdCat.execute(VariableContextImpl())
         Assertions.assertEquals(expected, actual)
     }
@@ -44,7 +44,7 @@ class CommandTests {
     fun testExecutePwdValid() {
         val args = listOf<Arg>()
         val cmdPwd = CommandFactoryImpl().createCommand(CommandType.Pwd, args)
-        val expected = File("").absolutePath to 0
+        val expected = Optional.of(File("").absolutePath) to 0
         val actual = cmdPwd.execute(VariableContextImpl())
         Assertions.assertEquals(expected, actual)
     }
@@ -55,7 +55,7 @@ class CommandTests {
         val path = pathToTestDirectory + "ForCommandTests.txt"
         val args = arrayOf(path).map { Arg(it) }
         val cmdWc = CommandFactoryImpl().createCommand(CommandType.Wc, args)
-        val expected = "lines: 1, words: 2, bytes: 14" to 0
+        val expected = Optional.of("lines: 1, words: 2, bytes: 14") to 0
         val actual = cmdWc.execute(VariableContextImpl())
         Assertions.assertEquals(expected, actual)
     }
@@ -94,7 +94,7 @@ class CommandTests {
         if (isWindows) {
             val args = listOf("echo", "42").map { Arg(it) }
             val cmdUnk = CommandFactoryImpl().createCommand(CommandType.Unknown, args)
-            val expected = "42" to 0
+            val expected = Optional.of("42") to 0
             Assertions.assertEquals(expected, cmdUnk.execute(VariableContextImpl()))
         }
     }
