@@ -17,7 +17,7 @@ class CommandFactoryImpl : CommandFactory {
             }
 
             CommandType.Pwd -> {
-                PwdCommand()
+                PwdCommand(argStrings)
             }
 
             CommandType.Wc -> {
@@ -25,11 +25,11 @@ class CommandFactoryImpl : CommandFactory {
             }
 
             CommandType.Exit -> {
-                ExitCommand()
+                ExitCommand(argStrings)
             }
 
             CommandType.Unknown -> UnknownCommand(argStrings)
-            CommandType.Assign -> TODO("Implement in the next homework")
+            CommandType.Assign -> AssignCommand(argStrings)
         }
     }
 

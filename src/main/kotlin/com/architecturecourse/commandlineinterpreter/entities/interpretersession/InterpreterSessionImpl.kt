@@ -25,7 +25,8 @@ class InterpreterSessionImpl(
                     commandFactory.createCommand(it)
                 }
                 val result = commandInterpreter.runCommandPipeline(commands)
-                userInterface.output(result.first)
+                if(!result.first.isEmpty)
+                    userInterface.output(result.first.get())
             } catch (e: Throwable) {
                 when (e) {
                     ExitInterruption -> return

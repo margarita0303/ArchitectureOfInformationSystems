@@ -9,7 +9,7 @@ import java.util.*
 /* If something is entered that the interpreter does not know, call an external program */
 class UnknownCommand(private val args: List<String>) : Command {
     override val expectedNumberOfArgs: Int? = null
-    override fun execute(context: VariableContext): Pair<String, Int> {
+    override fun execute(context: VariableContext): Pair<Optional<String>, Int>{
         val isWindows = System.getProperty("os.name")
             .lowercase(Locale.getDefault()).startsWith("windows")
 
@@ -27,6 +27,6 @@ class UnknownCommand(private val args: List<String>) : Command {
             val error = BufferedReader(InputStreamReader(process.errorStream)).lines().toList()
             throw ExternalCommandError(error.joinToString(separator = "\n"), exitCode)
         }
-        return output.joinToString(separator = "\n") to 0
+        return Optional.of(output.joinToString(separator = "\n")) to 0
     }
 }
