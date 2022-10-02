@@ -2,14 +2,34 @@ package com.architecturecourse.commandlineinterpreter.entities.lexer
 
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import com.architecturecourse.commandlineinterpreter.entities.utils.Token
+import com.architecturecourse.commandlineinterpreter.entities.utils.TokenWithQuotes
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.EmptyInputError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FirstTokenError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.QuotesError
 
 class LexerImpl : Lexer {
-    override fun lexInput(input: String): List<Token> {
-        return processLex(input, removeQuotes = true).map { Token(it) }
+    override fun lexInput(input: String): List<List<TokenWithQuotes>> {
+        return splitByPipes(input).map { section ->
+            processLex(
+                section.trim(),
+                removeQuotes = false
+            ).map { TokenWithQuotes(it) }
+        }
     }
+
+    override fun lexAfterSubst(substInput: String): List<List<Token>> {
+        return splitByPipes(substInput).map { section ->
+            processLex(
+                section.trim(),
+                removeQuotes = true
+            ).map { Token(it) }
+        }
+    }
+
+    private fun splitByPipes(input: String): List<String> {
+        return splitOutsideQuotes(input, PIPE, onlyFirst = false, removeQuotes = false)
+    }
+
 
     private fun processLex(input: String, removeQuotes: Boolean): List<String> {
         if (input.isEmpty()) throw EmptyInputError
@@ -80,5 +100,6 @@ class LexerImpl : Lexer {
         private const val WHITE_SPACE = ' '
         private const val SINGLE_QUOTE = '\''
         private const val DOUBLE_QUOTE = '\"'
+        private const val PIPE = '|'
     }
 }
