@@ -24,12 +24,8 @@ class InterpreterSessionImpl(
                 val commands = commandDataList.map {
                     commandFactory.createCommand(it)
                 }
-                var result = ""
-                for (i in commands.indices) {
-                    val outData = commandInterpreter.runCommand(commands[i], result)
-                    result = outData.first
-                }
-                userInterface.output(result)
+                val result = commandInterpreter.runCommandPipeline(commands)
+                userInterface.output(result.first)
             } catch (e: Throwable) {
                 when (e) {
                     ExitInterruption -> return
@@ -37,6 +33,7 @@ class InterpreterSessionImpl(
                         userInterface.output("Something went wrong: ${e.message}")
                         userInterface.output("Process finished with exit code ${e.code}.")
                     }
+
                     else -> {
                         userInterface.output("Something went wrong: ${e.message})")
                         userInterface.output("Process finished with exit code $NOT_CLI_ERROR_CODE.")
