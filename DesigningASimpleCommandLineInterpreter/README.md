@@ -2,7 +2,7 @@
 
 ## Архитектура процесса работы 
 
-![изображение](https://user-images.githubusercontent.com/44027333/189878373-fe840eb4-5ba0-4fa1-ad83-762a190ad866.png)
+![изображение](https://user-images.githubusercontent.com/54818274/192617996-692611fd-e4d4-4602-a177-2643c74faf8f.jpg)
 
 ### Архитектурные части
 
@@ -44,24 +44,18 @@
 
 ## Структуры и зависимости 
 
-![изображение](https://user-images.githubusercontent.com/44027333/189904257-fc821946-10a4-4eb8-842d-2c2107a59311.png)
-
-### Структуры
+![simple_bash_class_diagram](https://user-images.githubusercontent.com/54818274/192620841-f97e856a-48ea-4360-b511-d573bfecd529.jpg)
+### Классы
 
 1. UserInterface - структура, задача которой - отрисовка на экране приглашения к вводу строки с клавиатуры и вывода результата
 2. Lexer - структура, содержащая метод lex(string) -> [string] (разбиение строки на список токенов)
 3. Substitutor - структура, содержащая метод substr([string]) -> string (подстановка переменных в токенах, а затем формирование строки)
-4. Parser - структура, содержащая метод parse([string]) -> [CmdType], [[string]] (формирование 2 списков: список типов команд и список параметров команд по списку токенов)
-5. CmdType - enum, содержащий типы cat, echo, wc, pwd, ex, unknown, assign 
-6. CmdFactory - структура, содержащая метод createCmd(CmdType, [string]) -> Cmd (создание экземпляра Cmd по типу команды и параметрам)
-7. Cmd (команда) - структура, содержащая параметры args : [string], nArgs : int, а также метод execute(Context, string) -> string (исполнение команды по текущим значениям переменных и входным данным)
-8. Interpretator - структура, содержащая метод executeCmd(Cmd) -> string (исполнение команды)
+4. Tokenizer - управляет порядком вызова методов Lexer и Substitutor.
+5. Parser - структура, содержащая метод parse([string]) -> [CmdType], [[string]] (формирование 2 списков: список типов команд и список параметров команд по списку токенов)
+6. CmdType - enum, содержащий типы cat, echo, wc, pwd, ex, unknown, assign 
+7. CmdFactory - структура, содержащая метод createCmd(CmdType, [string]) -> Cmd (создание экземпляра Cmd по типу команды и параметрам)
+8. Cmd (команда) - структура, содержащая параметры args : [string], nArgs : int, а также метод execute(Context, string) -> string (исполнение команды по текущим значениям переменных и входным данным)
+9. Interpretator - структура, содержащая метод executeCmd(Cmd) -> string (исполнение команды)
 10. InterpreterSession - основной процесс, содержит экземпляры UserInterface, Lexer, Substitutor, Parser, CmdFactory, Interpretator, а также переменные, создаваемые пользователем с помощью команд.
 
-### Зависимости
-
-1. InterpreterSession имеет зависимость от UserInterface, Lexer, Substitutor, Parser, CmdFactory, Interpretator
-2. Substitutor имеет зависимость от InterpreterSession
-3. Interpretator имеет зависимость от InterpreterSession, Cmd
-4. CmdFactory имеет зависимость от Cmd, CmdType
 
