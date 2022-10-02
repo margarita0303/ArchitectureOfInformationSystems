@@ -9,7 +9,7 @@ import java.util.*
 
 /* cat [FILE] - display the contents of the file */
 class CatCommand(private val args: List<String>) : Command {
-    override val numberOfArgs: Int = 1
+    override val expectedNumberOfArgs: Int? = null
 
     override fun execute(context: VariableContext): Pair<String, Int> {
         val path = args[0]

@@ -4,44 +4,31 @@ import com.architecturecourse.commandlineinterpreter.entities.command.*
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandData
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
-import com.architecturecourse.commandlineinterpreter.entities.utils.error.WrongNumberOfArgumentsError
 
 class CommandFactoryImpl : CommandFactory {
 
     override fun createCommand(commandData: CommandData): Command {
         val commandType = commandData.type
-        val args = commandData.args
+        val argStrings = commandData.args.map { it.data }
         return when (commandType) {
-            CommandType.Echo -> EchoCommand(args.map { it.data })
+            CommandType.Echo -> EchoCommand(argStrings)
             CommandType.Cat -> {
-                val cmd = CatCommand(args.map { it.data })
-                if (!checkNumberOfArguments(cmd, args))
-                    throw WrongNumberOfArgumentsError
-                cmd
+                CatCommand(argStrings)
             }
 
             CommandType.Pwd -> {
-                val cmd = PwdCommand(args.map { it.data })
-                if (!checkNumberOfArguments(cmd, args))
-                    throw WrongNumberOfArgumentsError
-                cmd
+                PwdCommand()
             }
 
             CommandType.Wc -> {
-                val cmd = WcCommand(args.map { it.data })
-                if (!checkNumberOfArguments(cmd, args))
-                    throw WrongNumberOfArgumentsError
-                cmd
+                WcCommand(argStrings)
             }
 
             CommandType.Exit -> {
-                val cmd = ExitCommand(args.map { it.data })
-                if (!checkNumberOfArguments(cmd, args))
-                    throw WrongNumberOfArgumentsError
-                cmd
+                ExitCommand()
             }
 
-            CommandType.Unknown -> UnknownCommand(args.map { it.data })
+            CommandType.Unknown -> UnknownCommand(argStrings)
             CommandType.Assign -> TODO("Implement in the next homework")
         }
     }
@@ -49,7 +36,5 @@ class CommandFactoryImpl : CommandFactory {
     override fun createCommand(commandType: CommandType, args: List<Arg>): Command {
         return createCommand(CommandData(commandType, args))
     }
-
-    private fun checkNumberOfArguments(command: Command, args: List<Arg>): Boolean = args.size == command.numberOfArgs
 
 }

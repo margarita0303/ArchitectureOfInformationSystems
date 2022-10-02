@@ -11,5 +11,5 @@ interface Command {
         return execute(context)
     }
 
-    val numberOfArgs: Int?
+    val expectedNumberOfArgs: Int?
 }
