@@ -8,7 +8,7 @@ import java.util.*
 
 /* If something is entered that the interpreter does not know, call an external program */
 class UnknownCommand(private val args: List<String>) : Command {
-    override val numberOfArgs: Int? = null
+    override val expectedNumberOfArgs: Int? = null
     override fun execute(context: VariableContext): Pair<String, Int> {
         val isWindows = System.getProperty("os.name")
             .lowercase(Locale.getDefault()).startsWith("windows")

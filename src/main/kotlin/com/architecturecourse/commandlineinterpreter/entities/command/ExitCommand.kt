@@ -4,8 +4,8 @@ import com.architecturecourse.commandlineinterpreter.entities.context.VariableCo
 import com.architecturecourse.commandlineinterpreter.entities.utils.exit.ExitInterruption
 
 /* exit - exit the interpreter */
-class ExitCommand(private val args: List<String>) : Command {
-    override val numberOfArgs: Int = 0
+class ExitCommand : Command {
+    override val expectedNumberOfArgs: Int = 0
     override fun execute(context: VariableContext): Pair<String, Int> {
         throw ExitInterruption
     }
