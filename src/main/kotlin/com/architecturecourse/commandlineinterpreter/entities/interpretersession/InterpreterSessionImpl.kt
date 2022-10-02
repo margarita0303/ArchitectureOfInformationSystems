@@ -21,7 +21,8 @@ class InterpreterSessionImpl(
                 val data = userInterface.input()
                 val tokens = tokenizer.tokenize(data)
                 val commandData = parser.parse(tokens)
-                val command = commandFactory.createCommand(commandData)
+                // временно, пока CommandFactory не готова
+                val command = commandFactory.createCommand(commandData.first())
                 val (result, _) = commandInterpreter.runCommand(command)
                 userInterface.output(result)
             } catch (e: Throwable) {
