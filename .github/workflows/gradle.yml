@@ -2,11 +2,10 @@ name: CI
 
 # Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main", "ImplementationOfASimpleCommandLineInterpreter" ]
+    branches: [ "main", "ImplementationOfASimpleCommandLineInterpreter", "ImplementationOfASimpleCommandLineInterpreterPart2" ]
   pull_request:
-    branches: [ "main", "ImplementationOfASimpleCommandLineInterpreter" ]
+    branches: [ "main", "ImplementationOfASimpleCommandLineInterpreter", "ImplementationOfASimpleCommandLineInterpreterPart2" ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,5 +29,9 @@ jobs:
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
         with:
           arguments: build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Package
+          path: build/libs
       - name: Test
         run: ./gradlew test
