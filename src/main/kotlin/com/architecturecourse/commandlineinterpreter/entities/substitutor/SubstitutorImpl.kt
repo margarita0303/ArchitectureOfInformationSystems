@@ -18,7 +18,6 @@ class SubstitutorImpl : Substitutor {
         val curVarName = StringBuilder()
         val resToken = StringBuilder()
         var isSingleQuoteOpen = false
-        //var isDoubleQuoteOpen = false
         var isDollarOpen = false
 
         for (c in token.s + DOLLAR_SIGN) {
@@ -47,7 +46,7 @@ class SubstitutorImpl : Substitutor {
                 if (c == SINGLE_QUOTE)
                     isSingleQuoteOpen = !isSingleQuoteOpen
 
-                if (c != DOLLAR_SIGN)
+                if (isSingleQuoteOpen || c != DOLLAR_SIGN)
                     resToken.append(c)
             }
         }
