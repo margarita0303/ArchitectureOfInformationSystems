@@ -26,7 +26,7 @@ class SubstTests {
         context.addOrUpdateVar("b", "it")
         context.addOrUpdateVar("c", "hu")
         context.addOrUpdateVar("d", "ho")
-        val expected = "echo \"exit\" hu ' d'"
+        val expected = "echo \"exit\" hu ' \$d'"
         val actual = SubstitutorImpl().substitute(tokens, context)
         assertEquals(expected, actual)
     }
@@ -42,7 +42,7 @@ class SubstTests {
         context.addOrUpdateVar("b", "it")
         context.addOrUpdateVar("c", "hu")
         context.addOrUpdateVar("d", "ho")
-        val expected = "var=\"exit\" hu ' d'|pwd"
+        val expected = "var=\"exit\" hu ' \$d'|pwd"
         val actual = SubstitutorImpl().substitute(tokens, context)
         assertEquals(expected, actual)
     }
