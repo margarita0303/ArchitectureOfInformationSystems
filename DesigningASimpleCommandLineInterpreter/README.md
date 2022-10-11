@@ -2,8 +2,7 @@
 
 ## Архитектура процесса работы 
 
-![изображение](https://user-images.githubusercontent.com/54818274/192617996-692611fd-e4d4-4602-a177-2643c74faf8f.jpg)
-
+![sequence_diagram](https://user-images.githubusercontent.com/54818274/195072785-d2fd8461-1531-490c-9d48-7b6573be14d8.png)
 ### Архитектурные части
 
 1. UserInterface (input: string, output: string) - интерфейс взаимодействия с пользователем, который предлагает ввести команду, а затем выводит результат.
@@ -42,9 +41,9 @@
 
 Ошибки отлавливаются с помощью блоков try / catch.
 
-## Структуры и зависимости 
+## Классы и зависимости 
 
-![simple_bash_class_diagram](https://user-images.githubusercontent.com/54818274/192620841-f97e856a-48ea-4360-b511-d573bfecd529.jpg)
+![class_diagram](https://user-images.githubusercontent.com/54818274/195072880-c9156058-63c4-4209-89b8-4336a147f4e4.png)
 ### Классы
 
 1. UserInterface - структура, задача которой - отрисовка на экране приглашения к вводу строки с клавиатуры и вывода результата
