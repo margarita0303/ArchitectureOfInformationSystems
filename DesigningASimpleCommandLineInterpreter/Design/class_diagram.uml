@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.architecturecourse.commandlineinterpreter.entities.context.VariableContext</OriginalElement>
+  <nodes>
+    <node x="2707.37353515625" y="-706.359375">com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactoryImpl</node>
+    <node x="2569.843749999999" y="-1132.2499999999995">com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl</node>
+    <node x="1808.7656250000014" y="-462.3437500000001">com.architecturecourse.commandlineinterpreter.entities.substitutor.Substitutor</node>
+    <node x="1833.2885742187507" y="-706.359375">com.architecturecourse.commandlineinterpreter.entities.parser.ParserImpl</node>
+    <node x="3213.9160156249995" y="-861.359375">com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreter</node>
+    <node x="1833.288574218751" y="-861.359375">com.architecturecourse.commandlineinterpreter.entities.parser.Parser</node>
+    <node x="2265.3310546875005" y="-473.3437500000001">com.architecturecourse.commandlineinterpreter.entities.lexer.Lexer</node>
+    <node x="2265.3310546875005" y="-706.359375">com.architecturecourse.commandlineinterpreter.entities.tokenizer.TokenizerImpl</node>
+    <node x="2756.87353515625" y="-282.85937500000045">com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl</node>
+    <node x="2265.3310546875005" y="-282.85937500000045">com.architecturecourse.commandlineinterpreter.entities.lexer.LexerImpl</node>
+    <node x="3791.458496093749" y="-861.359375">com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterface</node>
+    <node x="2756.87353515625" y="-473.3437500000001">com.architecturecourse.commandlineinterpreter.entities.context.VariableContext</node>
+    <node x="3791.458496093749" y="-706.359375">com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterfaceImpl</node>
+    <node x="2303.8310546875005" y="-861.359375">com.architecturecourse.commandlineinterpreter.entities.tokenizer.Tokenizer</node>
+    <node x="2765.968749999999" y="-1286.4218749999995">com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSession</node>
+    <node x="1808.7656250000014" y="-299.3125000000002">com.architecturecourse.commandlineinterpreter.entities.substitutor.SubstitutorImpl</node>
+    <node x="3213.916031249999" y="-706.359375">com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreterImpl</node>
+    <node x="2707.37353515625" y="-861.359375">com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactory</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterface" relationship="TO_ONE">
+      <point x="280.12499999999955" y="-15.0" />
+      <point x="3873.958496093749" y="-1109.2499999999995" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSession" relationship="REALIZATION">
+      <point x="0.0" y="-38.0" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.parser.Parser" relationship="TO_ONE">
+      <point x="-280.125" y="0.0" />
+      <point x="1983.288574218751" y="-1094.2499999999995" />
+      <point x="0.0" y="-27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.substitutor.SubstitutorImpl" target="com.architecturecourse.commandlineinterpreter.entities.substitutor.Substitutor" relationship="REALIZATION">
+      <point x="0.0" y="-38.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactory" relationship="TO_ONE">
+      <point x="25.40478515625091" y="38.0" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.parser.ParserImpl" target="com.architecturecourse.commandlineinterpreter.entities.parser.Parser" relationship="REALIZATION">
+      <point x="2.2737367544323206E-13" y="-38.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.tokenizer.Tokenizer" relationship="TO_ONE">
+      <point x="-280.125" y="15.0" />
+      <point x="2420.3310546875005" y="-1079.2499999999995" />
+      <point x="0.0" y="-27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactoryImpl" target="com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactory" relationship="REALIZATION">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterfaceImpl" target="com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterface" relationship="REALIZATION">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.tokenizer.TokenizerImpl" target="com.architecturecourse.commandlineinterpreter.entities.context.VariableContext" relationship="TO_ONE">
+      <point x="-5.4687500323780114E-5" y="38.50037499999996" />
+      <point x="2420.331" y="-540.0" />
+      <point x="2875.374" y="-540.0" />
+      <point x="4.648437497962732E-4" y="-38.00024999999988" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.interpretersession.InterpreterSessionImpl" target="com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreter" relationship="TO_ONE">
+      <point x="280.12499999999955" y="0.0" />
+      <point x="3417.4160156249995" y="-1094.2499999999995" />
+      <point x="0.0" y="-38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.tokenizer.TokenizerImpl" target="com.architecturecourse.commandlineinterpreter.entities.substitutor.Substitutor" relationship="TO_ONE">
+      <point x="-155.0" y="0.0" />
+      <point x="2150.788574218751" y="-667.859375" />
+      <point x="146.02294921874955" y="-27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.tokenizer.TokenizerImpl" target="com.architecturecourse.commandlineinterpreter.entities.lexer.Lexer" relationship="TO_ONE">
+      <point x="-15.000054687500324" y="38.5" />
+      <point x="-7.000054687500324" y="-38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreterImpl" target="com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreter" relationship="REALIZATION">
+      <point x="-1.5624999377905624E-5" y="-49.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.tokenizer.TokenizerImpl" target="com.architecturecourse.commandlineinterpreter.entities.tokenizer.Tokenizer" relationship="REALIZATION">
+      <point x="0.0" y="-38.5" />
+      <point x="0.0" y="27.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl" target="com.architecturecourse.commandlineinterpreter.entities.context.VariableContext" relationship="REALIZATION">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.lexer.LexerImpl" target="com.architecturecourse.commandlineinterpreter.entities.lexer.Lexer" relationship="REALIZATION">
+      <point x="0.0" y="-49.5" />
+      <point x="0.0" y="38.0" />
+    </edge>
+    <edge source="com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreterImpl" target="com.architecturecourse.commandlineinterpreter.entities.context.VariableContext" relationship="TO_ONE">
+      <point x="-3.124999875581125E-5" y="49.50037499999996" />
+      <point x="3417.416" y="-540.0" />
+      <point x="2875.374" y="-540.0" />
+      <point x="4.648437497962732E-4" y="-38.00024999999988" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.5120000000000005" showDependencies="true" x="2932.8222656249986" y="-591.4843750000007" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
