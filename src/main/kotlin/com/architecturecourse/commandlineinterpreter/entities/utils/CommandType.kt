@@ -19,5 +19,8 @@ sealed interface CommandType {
     object Assign : CommandType {
         const val TAG = "="
     }
+    object Grep : CommandType {
+        const val TAG = "grep"
+    }
     object Unknown : CommandType
 }

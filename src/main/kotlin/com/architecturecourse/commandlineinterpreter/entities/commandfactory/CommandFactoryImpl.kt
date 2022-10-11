@@ -12,22 +12,11 @@ class CommandFactoryImpl : CommandFactory {
         val argStrings = commandData.args.map { it.data }
         return when (commandType) {
             CommandType.Echo -> EchoCommand(argStrings)
-            CommandType.Cat -> {
-                CatCommand(argStrings)
-            }
-
-            CommandType.Pwd -> {
-                PwdCommand(argStrings)
-            }
-
-            CommandType.Wc -> {
-                WcCommand(argStrings)
-            }
-
-            CommandType.Exit -> {
-                ExitCommand(argStrings)
-            }
-
+            CommandType.Cat -> CatCommand(argStrings)
+            CommandType.Pwd -> PwdCommand(argStrings)
+            CommandType.Wc -> WcCommand(argStrings)
+            CommandType.Exit -> ExitCommand(argStrings)
+            CommandType.Grep -> GrepCommand(argStrings)
             CommandType.Unknown -> UnknownCommand(argStrings)
             CommandType.Assign -> AssignCommand(argStrings)
         }
