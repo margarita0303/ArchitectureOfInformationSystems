@@ -22,6 +22,8 @@ class ParserImpl : Parser {
                 CommandType.Exit.TAG -> CommandData(CommandType.Exit, args)
                 CommandType.Assign.TAG -> CommandData(CommandType.Assign, args)
                 CommandType.Grep.TAG -> CommandData(CommandType.Grep, args)
+                CommandType.CD.TAG -> CommandData(CommandType.CD, args)
+                CommandType.LS.TAG -> CommandData(CommandType.LS, args)
                 else -> CommandData(CommandType.Unknown, listOf(Arg(section.first().data)) + args)
             }
         }

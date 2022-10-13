@@ -19,6 +19,8 @@ class CommandFactoryImpl : CommandFactory {
             CommandType.Grep -> GrepCommand(argStrings)
             CommandType.Unknown -> UnknownCommand(argStrings)
             CommandType.Assign -> AssignCommand(argStrings)
+            CommandType.LS -> LSCommand(argStrings)
+            CommandType.CD -> CDCommand(argStrings)
         }
     }
 

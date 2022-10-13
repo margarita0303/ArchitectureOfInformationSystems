@@ -3,6 +3,7 @@ package com.architecturecourse.commandlineinterpreter.entities.interpretersessio
 import com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactory
 import com.architecturecourse.commandlineinterpreter.entities.commandinterpreter.CommandInterpreter
 import com.architecturecourse.commandlineinterpreter.entities.parser.Parser
+import com.architecturecourse.commandlineinterpreter.entities.singletons.SystemStateSingletonImpl
 import com.architecturecourse.commandlineinterpreter.entities.tokenizer.Tokenizer
 import com.architecturecourse.commandlineinterpreter.entities.userinterface.UserInterface
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.CLIError
@@ -16,6 +17,9 @@ class InterpreterSessionImpl(
     private val parser: Parser,
 ) : InterpreterSession {
     override fun launch() {
+
+        println(SystemStateSingletonImpl.instance.getPath())
+
         while (true) {
             try {
                 val data = userInterface.input()

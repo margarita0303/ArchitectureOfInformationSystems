@@ -22,5 +22,13 @@ sealed interface CommandType {
     object Grep : CommandType {
         const val TAG = "grep"
     }
+
+    object LS : CommandType {
+        const val TAG = "ls"
+    }
+
+    object CD : CommandType {
+        const val TAG = "cd"
+    }
     object Unknown : CommandType
 }
