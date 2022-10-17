@@ -13,7 +13,7 @@ class CDCommand(private val args: List<String>) : Command {
     override fun execute(context: VariableContext): Pair<Optional<String>, Int> {
 
         if (args.size == expectedNumberOfArgs) {
-            var path = args[0]
+            var path = SystemStateSingletonImpl.instance.getFullPath(args[0])
 
             if (path.startsWith("/")) {
                 // absolute path
