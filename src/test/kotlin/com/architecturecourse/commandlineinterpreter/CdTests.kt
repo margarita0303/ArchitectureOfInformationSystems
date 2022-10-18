@@ -19,19 +19,51 @@ class CdTests {
 
     @Test
     fun testExecuteCDValid() {
-        // Берем старотовый путь
         var startedPath = System.getProperty("user.dir")
 
-        // Делаем команду выхода назад от текущей дириктории
+
         val args = listOf("..").map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, args)
         cmdCD.execute(VariableContextImpl())
 
-        // Вручнуб берем родительский файл от стартовой дириктории
-        val expected = File(startedPath).parentFile.absolutePath
+        val expected = File(startedPath).absolutePath
 
-        // Сравниваем с текущей дириктории. Она хранится в SystemStateSingletonImpl.instance.getPath()
         Assertions.assertEquals(expected, SystemStateSingletonImpl.instance.getPath())
     }
-}
+    @Test
+    fun testExecuteCDValidNextDir() {
+        var startedPath = System.getProperty("user.dir")
 
+
+        val args = listOf("build").map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, args)
+        cmdCD.execute(VariableContextImpl())
+
+
+        val expected = File(startedPath).absolutePath + "\\build"
+
+        Assertions.assertEquals(expected, SystemStateSingletonImpl.instance.getPath())
+    }
+
+    @Test
+    fun testExecuteCDValidNextTwoDirWithCheckCat() {
+        var startedPath = System.getProperty("user.dir")
+
+        val args = listOf("testForTests").map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, args)
+        cmdCD.execute(VariableContextImpl())
+        val path = "tt.txt"
+        val argsTwo =  arrayOf(path).map { Arg(it) }
+        val cmdCat = CommandFactoryImpl().createCommand(CommandType.Cat, argsTwo)
+        cmdCD.execute(VariableContextImpl())
+
+
+        val expected = Optional.of("червячок _/‾\\_/‾\\_/‾\\_o") to 0
+        val actual = cmdCat.execute(VariableContextImpl())
+        println(expected)
+        println(actual)
+        Assertions.assertEquals(expected, actual)
+    }
+
+
+}

@@ -34,10 +34,34 @@ class LsTests {
                         "gradlew.bat\n" +
                         "README.md\n" +
                         "settings.gradle.kts\n" +
-                        "src\n"
+                        "src\n" +
+                        "testForTests\n"
             ) to 0
-
+            val actual = cmdLS.execute(VariableContextImpl())
+            Assertions.assertEquals(expected, actual)
         }
-
-
+    @Test
+    fun testExecuteLsValidSimpleVariantOfLsCommand() {
+        val args = listOf<Arg>()
+        println(args)
+        val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
+        val expected = Optional.of(
+            ".git\n" + ".github\n" +
+                    ".gradle\n" +
+                    ".idea\n" +
+                    "build\n" +
+                    "build.gradle.kts\n" +
+                    "DesigningASimpleCommandLineInterpreter\n" +
+                    "feedback.md\n" +
+                    "gradle\n" +
+                    "gradlew\n" +
+                    "gradlew.bat\n" +
+                    "README.md\n" +
+                    "settings.gradle.kts\n" +
+                    "src\n" +
+                    "testForTests\n"
+        ) to 0
+        val actual = cmdLS.execute(VariableContextImpl())
+        Assertions.assertEquals(expected, actual)
+    }
 }
