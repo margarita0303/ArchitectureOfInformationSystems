@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.architecturecourse.commandlineinterpreter.CommandTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-17T14:00:43" hostname="DESKTOP-LP6QJMQ" time="0.058">
-  <properties/>
-  <testcase name="testUnknownCommand()" classname="com.architecturecourse.commandlineinterpreter.CommandTests" time="0.058"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
