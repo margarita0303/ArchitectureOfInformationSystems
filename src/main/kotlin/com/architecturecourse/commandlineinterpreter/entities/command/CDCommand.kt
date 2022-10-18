@@ -13,10 +13,13 @@ class CDCommand(private val args: List<String>) : Command {
     override fun execute(context: VariableContext): Pair<Optional<String>, Int> {
 
         if (args.size == expectedNumberOfArgs) {
-            var path = SystemStateSingletonImpl.instance.getFullPath(args[0])
+            var path = args[0]
 
-            if (path.startsWith("/")) {
+            if (isAbsolutePath(path)) {
                 // absolute path
+                if (path.startsWith("/")) {
+                    path = SystemStateSingletonImpl.instance.getFullPath(path)
+                }
                 if (File(path).exists()) {
                     SystemStateSingletonImpl.instance.setPath(path)
                 }
@@ -29,7 +32,7 @@ class CDCommand(private val args: List<String>) : Command {
                         curFile = curFile.parentFile
                     } else {
                         var nextFile = File(curFile.absolutePath + "/" + it)
-                        if(nextFile.exists()){
+                        if (nextFile.exists()) {
                             curFile = nextFile
                         } else {
                             return Optional.of("no such file or directory: " + path) to 0
@@ -44,6 +47,23 @@ class CDCommand(private val args: List<String>) : Command {
 
 
         return Optional.empty<String>() to 0
+    }
+
+    private fun isAbsolutePath(path: String): Boolean {
+        if (path.startsWith("/")) {
+            return true
+        }
+
+        var isWindows = System.getProperty("os.name")
+            .lowercase(Locale.getDefault()).startsWith("windows")
+
+        if (isWindows) {
+            var dir = path.split("\\")
+            if (File(dir.get(0)).exists()) {
+                return true
+            }
+        }
+        return false
     }
 
     // червячок _/‾\_/‾\_/‾\_o

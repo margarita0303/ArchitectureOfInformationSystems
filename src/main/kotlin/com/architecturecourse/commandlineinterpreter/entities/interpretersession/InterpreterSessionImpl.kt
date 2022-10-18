@@ -18,8 +18,6 @@ class InterpreterSessionImpl(
 ) : InterpreterSession {
     override fun launch() {
 
-        println(SystemStateSingletonImpl.instance.getPath())
-
         while (true) {
             try {
                 val data = userInterface.input()
