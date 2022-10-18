@@ -58,8 +58,8 @@ class CDCommand(private val args: List<String>) : Command {
             .lowercase(Locale.getDefault()).startsWith("windows")
 
         if (isWindows) {
-            var dir = path.split("\\")
-            if (File(dir.get(0)).exists()) {
+            var dir = path.split("/")
+            if (!dir.get(0).equals("..") && File(dir.get(0)).exists()) {
                 return true
             }
         }
