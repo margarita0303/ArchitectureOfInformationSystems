@@ -2,6 +2,7 @@ package com.architecturecourse.commandlineinterpreter
 
 import com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactoryImpl
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
+import com.architecturecourse.commandlineinterpreter.entities.singletons.SystemStateSingletonImpl
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import org.junit.jupiter.api.Assertions
@@ -18,10 +19,19 @@ class CdTests {
 
     @Test
     fun testExecuteCDValid() {
-            val args = listOf("echo", "42").map { Arg(it) }
-            val cmdUnk = CommandFactoryImpl().createCommand(CommandType.Unknown, args)
-            val expected = Optional.of("42") to 0
-            Assertions.assertEquals(expected, cmdUnk.execute(VariableContextImpl()))
-}
+        // Берем старотовый путь
+        var startedPath = System.getProperty("user.dir")
+
+        // Делаем команду выхода назад от текущей дириктории
+        val args = listOf("..").map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, args)
+        cmdCD.execute(VariableContextImpl())
+
+        // Вручнуб берем родительский файл от стартовой дириктории
+        val expected = File(startedPath).parentFile.absolutePath
+
+        // Сравниваем с текущей дириктории. Она хранится в SystemStateSingletonImpl.instance.getPath()
+        Assertions.assertEquals(expected, SystemStateSingletonImpl.instance.getPath())
+    }
 }
 
