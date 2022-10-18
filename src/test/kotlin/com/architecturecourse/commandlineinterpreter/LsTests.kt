@@ -7,61 +7,17 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.util.*
 
 class LsTests {
 
-    private val isWindows = System.getProperty("os.name")
-        .lowercase(Locale.getDefault()).startsWith("windows")
-
-    var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
-
-    @Test
-    fun testExecuteLsValidSimpleVariantOfLs() {
-            val args = listOf<Arg>()
-            println(args)
-            val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
-            val expected = Optional.of(
-                ".git\n" + ".github\n" +
-                        ".gradle\n" +
-                        ".idea\n" +
-                        "build\n" +
-                        "build.gradle.kts\n" +
-                        "DesigningASimpleCommandLineInterpreter\n" +
-                        "feedback.md\n" +
-                        "gradle\n" +
-                        "gradlew\n" +
-                        "gradlew.bat\n" +
-                        "README.md\n" +
-                        "settings.gradle.kts\n" +
-                        "src\n" +
-                        "testForTests\n"
-            ) to 0
-            val actual = cmdLS.execute(VariableContextImpl())
-            Assertions.assertEquals(expected, actual)
-        }
     @Test
     fun testExecuteLsValidSimpleVariantOfLsCommand() {
         val args = listOf<Arg>()
-        println(args)
         val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
-        val expected = Optional.of(
-            ".git\n" + ".github\n" +
-                    ".gradle\n" +
-                    ".idea\n" +
-                    "build\n" +
-                    "build.gradle.kts\n" +
-                    "DesigningASimpleCommandLineInterpreter\n" +
-                    "feedback.md\n" +
-                    "gradle\n" +
-                    "gradlew\n" +
-                    "gradlew.bat\n" +
-                    "README.md\n" +
-                    "settings.gradle.kts\n" +
-                    "src\n" +
-                    "testForTests\n"
-        ) to 0
         val actual = cmdLS.execute(VariableContextImpl())
-        Assertions.assertEquals(expected, actual)
+        var startedPath = System.getProperty("user.dir")
+        var dirFiles = actual.first.get().split("\n")
+
+        File(startedPath).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
     }
 }

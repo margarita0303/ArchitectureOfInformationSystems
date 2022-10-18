@@ -12,11 +12,6 @@ import java.util.*
 
 class CdTests {
 
-    private val isWindows = System.getProperty("os.name")
-        .lowercase(Locale.getDefault()).startsWith("windows")
-
-    var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
-
     @Test
     fun testExecuteCDValid() {
         var startedPath = System.getProperty("user.dir")
@@ -47,8 +42,6 @@ class CdTests {
 
     @Test
     fun testExecuteCDValidNextTwoDirWithCheckCat() {
-        var startedPath = System.getProperty("user.dir")
-
         val args = listOf("testForTests").map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, args)
         cmdCD.execute(VariableContextImpl())
@@ -60,10 +53,7 @@ class CdTests {
 
         val expected = Optional.of("червячок _/‾\\_/‾\\_/‾\\_o") to 0
         val actual = cmdCat.execute(VariableContextImpl())
-        println(expected)
-        println(actual)
         Assertions.assertEquals(expected, actual)
     }
-
 
 }
