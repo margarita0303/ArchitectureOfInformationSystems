@@ -8,11 +8,12 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.PathError
 import com.architecturecourse.commandlineinterpreter.entities.utils.exit.ExitInterruption
-import java.io.File
-import java.util.Optional
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.io.File
+import java.util.*
+import kotlin.io.path.absolutePathString
 
 class CommandTests {
     var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
@@ -59,6 +60,19 @@ class CommandTests {
         Assertions.assertEquals(expected, actual)
     }
 
+    /* Testing command cd [DIR] - must change the working directory to absolute or relative directory */
+    @Test
+    fun testExecuteCdValid() {
+        val args = listOf(Arg("src"))
+        val cmdCd = CommandFactoryImpl().createCommand(CommandType.Cd, args)
+        val context = EnvironmentContextImpl(VariableContextImpl())
+        val currentDirectory = context.getCurrentDirectory()
+        val expected = "$currentDirectory/${args.single().data}"
+        cmdCd.execute(context)
+        val actual = context.getCurrentDirectory().absolutePathString()
+        Assertions.assertEquals(expected, actual)
+    }
+
     /* Testing command exit - must throw ExitError */
     @Test
     fun testExecuteExitValid() {
@@ -100,6 +114,14 @@ class CommandTests {
         val args = arrayOf(path).map { Arg(it) }
         val cmdWc = CommandFactoryImpl().createCommand(CommandType.Wc, args)
         assertThrows<FileError> { cmdWc.execute(EnvironmentContextImpl(VariableContextImpl())) }
+    }
+
+    /* If the directory does not exist execute() must throw PathError */
+    @Test
+    fun testExecuteCdWrongPath() {
+        val args = listOf(Arg("not_existing_folder"))
+        val cmdCd = CommandFactoryImpl().createCommand(CommandType.Cd, args)
+        assertThrows<PathError> { cmdCd.execute(EnvironmentContextImpl(VariableContextImpl())) }
     }
 
     /* If the file or folder does not exist execute() must throw PathError */

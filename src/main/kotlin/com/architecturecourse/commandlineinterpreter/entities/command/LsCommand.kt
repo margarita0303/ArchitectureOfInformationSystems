@@ -10,6 +10,7 @@ import kotlin.io.path.listDirectoryEntries
 import kotlin.io.path.name
 import kotlin.io.path.notExists
 
+/* ls [DIR] - list directory contents */
 class LsCommand(private val args: List<String>) : Command {
 
     override val expectedNumberOfArgs: Int = 1
