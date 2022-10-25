@@ -5,18 +5,16 @@ import com.architecturecourse.commandlineinterpreter.entities.context.Environmen
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
-import com.architecturecourse.commandlineinterpreter.entities.utils.exit.ExitInterruption
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.PathError
+import com.architecturecourse.commandlineinterpreter.entities.utils.exit.ExitInterruption
+import java.io.File
+import java.util.Optional
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.io.File
-import java.util.*
 
 class CommandTests {
-    private val isWindows = System.getProperty("os.name")
-        .lowercase(Locale.getDefault()).startsWith("windows")
-
     var pathToTestDirectory = "src/test/kotlin/com/architecturecourse/commandlineinterpreter/"
 
     /* Testing command echo - must display the entered argument (or arguments) */
@@ -69,6 +67,21 @@ class CommandTests {
         assertThrows<ExitInterruption> { cmdExit.execute(EnvironmentContextImpl(VariableContextImpl())) }
     }
 
+    /* Testing command ls - must print files and folders are contained in a specified folder */
+    @Test
+    fun testExecuteLsValid() {
+        val path = pathToTestDirectory + "ls_test"
+        val args = listOf(path).map { Arg(it) }
+        val cmdLs = CommandFactoryImpl().createCommand(CommandType.Ls, args)
+        val expected = listOf("file_1.txt", "file_2", "folder" + File.separator).sorted()
+        val (actual, exitCode) = cmdLs.execute(EnvironmentContextImpl(VariableContextImpl()))
+        Assertions.assertEquals(0, exitCode)
+        Assertions.assertLinesMatch(
+            expected,
+            actual.get().lines().sorted()
+        )
+    }
+
     /* Testing errors */
 
     /* If the file does not exist execute() must throw FileError */
@@ -89,14 +102,20 @@ class CommandTests {
         assertThrows<FileError> { cmdWc.execute(EnvironmentContextImpl(VariableContextImpl())) }
     }
 
-    // TODO Add Linux test case
+    /* If the file or folder does not exist execute() must throw PathError */
+    @Test
+    fun testExecuteLsWrongFile() {
+        val path = pathToTestDirectory + "ls_test/lol"
+        val args = arrayOf(path).map { Arg(it) }
+        val cmdLs = CommandFactoryImpl().createCommand(CommandType.Ls, args)
+        assertThrows<PathError> { cmdLs.execute(EnvironmentContextImpl(VariableContextImpl())) }
+    }
+
     @Test
     fun testUnknownCommand() {
-        if (isWindows) {
-            val args = listOf("echo", "42").map { Arg(it) }
-            val cmdUnk = CommandFactoryImpl().createCommand(CommandType.Unknown, args)
-            val expected = Optional.of("42") to 0
-            Assertions.assertEquals(expected, cmdUnk.execute(EnvironmentContextImpl(VariableContextImpl())))
-        }
+        val args = listOf("echo", "42").map { Arg(it) }
+        val cmdUnk = CommandFactoryImpl().createCommand(CommandType.Unknown, args)
+        val expected = Optional.of("42") to 0
+        Assertions.assertEquals(expected, cmdUnk.execute(EnvironmentContextImpl(VariableContextImpl())))
     }
 }

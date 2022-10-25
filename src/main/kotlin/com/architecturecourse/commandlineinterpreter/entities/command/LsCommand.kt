@@ -1,7 +1,7 @@
 package com.architecturecourse.commandlineinterpreter.entities.command
 
 import com.architecturecourse.commandlineinterpreter.entities.context.EnvironmentContext
-import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
+import com.architecturecourse.commandlineinterpreter.entities.utils.error.PathError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.WrongNumberOfArgumentsError
 import java.io.File
 import java.util.Optional
@@ -25,7 +25,7 @@ class LsCommand(private val args: List<String>) : Command {
             args.singleOrNull() ?: "."
         )
         if (targetPath.notExists()) {
-            throw FileError
+            throw PathError
         }
         val entries = if (targetPath.isDirectory()) {
             targetPath.listDirectoryEntries()
