@@ -10,17 +10,9 @@ import java.util.*
 class UnknownCommand(private val args: List<String>) : Command {
     override val expectedNumberOfArgs: Int? = null
     override fun execute(context: EnvironmentContext): Pair<Optional<String>, Int>{
-        val isWindows = System.getProperty("os.name")
-            .lowercase(Locale.getDefault()).startsWith("windows")
-
         val processBuilder = ProcessBuilder()
             .directory(context.getCurrentDirectory().toFile().absoluteFile)
-
-        if (isWindows) {
-            processBuilder.command("cmd.exe /c ${args.joinToString(separator = " ")}")
-        } else {
-            processBuilder.command(java.lang.String.format("sh -c ${args.joinToString(separator = " ")}"))
-        }
+            .command(args[0], *args.drop(1).toTypedArray())
 
         val process: Process = processBuilder.start()
 
