@@ -1,9 +1,9 @@
 package com.architecturecourse.commandlineinterpreter.entities.command
 
-import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
+import com.architecturecourse.commandlineinterpreter.entities.context.EnvironmentContext
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.WrongNumberOfArgumentsError
-import java.io.File
-import java.util.*
+import java.util.Optional
+import kotlin.io.path.absolutePathString
 
 /* pwd - print current directory */
 class PwdCommand(args: List<String>) : Command {
@@ -12,7 +12,7 @@ class PwdCommand(args: List<String>) : Command {
         if(args.size != expectedNumberOfArgs)
             throw WrongNumberOfArgumentsError
     }
-    override fun execute(context: VariableContext): Pair<Optional<String>, Int> {
-        return Optional.of(File("").absolutePath) to 0
+    override fun execute(context: EnvironmentContext): Pair<Optional<String>, Int> {
+        return Optional.of(context.getCurrentDirectory().absolutePathString()) to 0
     }
 }

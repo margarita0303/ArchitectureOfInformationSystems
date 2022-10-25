@@ -1,20 +1,20 @@
 package com.architecturecourse.commandlineinterpreter.entities.command
 
 import com.architecturecourse.commandlineinterpreter.entities.command.utils.GrepArgsConfiguration
-import com.architecturecourse.commandlineinterpreter.entities.context.VariableContext
+import com.architecturecourse.commandlineinterpreter.entities.context.EnvironmentContext
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.FileError
 import com.architecturecourse.commandlineinterpreter.entities.utils.error.WrongNumberOfArgumentsError
 import picocli.CommandLine
 import java.io.BufferedReader
-import java.io.File
 import java.io.FileReader
 import java.util.*
+import kotlin.io.path.div
 
 class GrepCommand(private val args: List<String>) : Command {
-    override fun execute(context: VariableContext): Pair<Optional<String>, Int> = execute(context, Optional.empty())
+    override fun execute(context: EnvironmentContext): Pair<Optional<String>, Int> = execute(context, Optional.empty())
 
 
-    override fun execute(context: VariableContext, input: Optional<String>): Pair<Optional<String>, Int> {
+    override fun execute(context: EnvironmentContext, input: Optional<String>): Pair<Optional<String>, Int> {
         val argParser = GrepArgsConfiguration()
         CommandLine(argParser).parseArgs(*(args.toTypedArray()))
 
@@ -25,7 +25,8 @@ class GrepCommand(private val args: List<String>) : Command {
 
         try {
             val lines = argParser.file?.let { path ->
-                BufferedReader(FileReader(File(path), Charsets.UTF_8)).lines().toList()
+                val resolvedPath = context.getCurrentDirectory() / path
+                BufferedReader(FileReader(resolvedPath.toFile(), Charsets.UTF_8)).lines().toList()
             } ?: if (input.isPresent) input.get().lines() else throw WrongNumberOfArgumentsError
 
             if (fullWord) {
