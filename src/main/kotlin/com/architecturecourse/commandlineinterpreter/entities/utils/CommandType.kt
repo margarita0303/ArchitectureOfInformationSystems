@@ -25,5 +25,10 @@ sealed interface CommandType {
     object Cd : CommandType {
         const val TAG = "cd"
     }
+
+    object Ls : CommandType {
+        const val TAG = "ls"
+    }
+
     object Unknown : CommandType
 }

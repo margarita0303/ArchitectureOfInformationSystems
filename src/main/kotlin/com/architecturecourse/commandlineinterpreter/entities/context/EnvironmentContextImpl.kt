@@ -4,7 +4,7 @@ import java.io.File
 import java.nio.file.Path
 
 class EnvironmentContextImpl(private val variableContext: VariableContext) : EnvironmentContext {
-    private var currentDirectory: Path = File("").toPath()
+    private var currentDirectory: Path = File("").toPath().toRealPath()
 
     override fun getVariableContext(): VariableContext =
         variableContext
@@ -13,6 +13,6 @@ class EnvironmentContextImpl(private val variableContext: VariableContext) : Env
         currentDirectory
 
     override fun setCurrentDirectory(path: Path) {
-        currentDirectory = path
+        currentDirectory = path.toRealPath()
     }
 }
