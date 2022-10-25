@@ -14,7 +14,7 @@ class UnknownCommand(private val args: List<String>) : Command {
             .lowercase(Locale.getDefault()).startsWith("windows")
 
         val processBuilder = ProcessBuilder()
-            .directory(context.getCurrentDirectory().toFile())
+            .directory(context.getCurrentDirectory().toFile().absoluteFile)
 
         if (isWindows) {
             processBuilder.command("cmd.exe /c ${args.joinToString(separator = " ")}")

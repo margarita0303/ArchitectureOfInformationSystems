@@ -9,7 +9,7 @@ interface Command {
     fun execute(context: EnvironmentContext): Pair<Optional<String>, Int>
 
     fun execute(context: EnvironmentContext, input: Optional<String>): Pair<Optional<String>, Int> {
-        return execute(context, input)
+        return execute(context)
     }
 
     val expectedNumberOfArgs: Int?
