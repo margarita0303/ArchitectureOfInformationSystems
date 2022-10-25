@@ -1,6 +1,7 @@
 package com.architecturecourse.commandlineinterpreter
 
 import com.architecturecourse.commandlineinterpreter.entities.command.GrepCommand
+import com.architecturecourse.commandlineinterpreter.entities.context.EnvironmentContextImpl
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
@@ -14,7 +15,7 @@ class GrepTests {
         val args = listOf("тор", pathToTestDirectory + "grep_test.txt")
         val expected = "Тор торопился потеряться в штопоре,\n" +
                 "но фтор повтором роптал в гроте штопанном"
-        val actual = GrepCommand(args).execute(VariableContextImpl()).first.get()
+        val actual = GrepCommand(args).execute(EnvironmentContextImpl(VariableContextImpl())).first.get()
         assertEquals(expected, actual)
     }
 
@@ -24,7 +25,7 @@ class GrepTests {
         val expected = "Тор торопился потеряться в штопоре,\n" +
                 "но фтор повтором роптал в гроте штопанном\n" +
                 "ТОРГОВЛЯ ТОРТАМИ в Майорке"
-        val actual = GrepCommand(args).execute(VariableContextImpl()).first.get()
+        val actual = GrepCommand(args).execute(EnvironmentContextImpl(VariableContextImpl())).first.get()
         assertEquals(expected, actual)
     }
 
@@ -37,7 +38,7 @@ class GrepTests {
                 "но фтор повтором роптал в гроте штопанном\n" +
                 "строка раз\n" +
                 "строка два"
-        val actual = GrepCommand(args).execute(VariableContextImpl()).first.get()
+        val actual = GrepCommand(args).execute(EnvironmentContextImpl(VariableContextImpl())).first.get()
         assertEquals(expected, actual)
     }
 
@@ -45,7 +46,7 @@ class GrepTests {
     fun fullWordTest() {
         val args = listOf("-w", "-i", "тор", pathToTestDirectory + "grep_test.txt")
         val expected = "Тор торопился потеряться в штопоре,"
-        val actual = GrepCommand(args).execute(VariableContextImpl()).first.get()
+        val actual = GrepCommand(args).execute(EnvironmentContextImpl(VariableContextImpl())).first.get()
         assertEquals(expected, actual)
     }
 }
