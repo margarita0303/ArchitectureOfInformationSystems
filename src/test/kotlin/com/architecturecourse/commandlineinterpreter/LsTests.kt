@@ -6,6 +6,7 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor
 import java.io.File
 
 class LsTests {
@@ -70,6 +71,95 @@ class LsTests {
         var startedPath = System.getProperty("user.dir")
         val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
                 "first" + File.separator + "first").absolutePath
+        var dirFiles = actual.first.get().split("\n")
+
+        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
+    }
+
+//  main->testForTests->third->first:
+//  --second
+//  --gr.py
+    @Test
+    fun testExecuteLsValidOfLsCommandOnTestDirFourth() {
+        val list = File( "testForTests" + File.separator + "third" + File.separator + "first").absolutePath
+        val argsCD = listOf(list).map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
+        cmdCD.execute(VariableContextImpl())
+
+        val args = listOf<Arg>()
+        val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
+        val actual = cmdLS.execute(VariableContextImpl())
+
+        var startedPath = System.getProperty("user.dir")
+        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
+                "third" + File.separator + "first").absolutePath
+        var dirFiles = actual.first.get().split("\n")
+
+        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
+    }
+
+//  main->testForTests->third->first:
+//  --second
+//  --gr.py
+    @Test
+    fun testExecuteLsValidOfLsCommandOnTestDirFifth() {
+        val list = File( "testForTests" + File.separator + "third" + File.separator + "first").absolutePath
+        val argsCD = listOf(list).map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
+        cmdCD.execute(VariableContextImpl())
+
+        val args = listOf<Arg>()
+        val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
+        val actual = cmdLS.execute(VariableContextImpl())
+
+        var startedPath = System.getProperty("user.dir")
+        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
+                "third" + File.separator + "first").absolutePath
+        var dirFiles = actual.first.get().split("\n")
+
+        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
+    }
+
+//  main->testForTests->third->first->second:
+//  --ff.txt
+//  --gt.py
+//  --jj.txt
+//  --rr.txt
+    @Test
+    fun testExecuteLsValidOfLsCommandOnTestDirSixth() {
+        val list = File( "testForTests" + File.separator + "third" + File.separator + "first" + File.separator
+                + "second").absolutePath
+        val argsCD = listOf(list).map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
+        cmdCD.execute(VariableContextImpl())
+
+        val args = listOf<Arg>()
+        val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
+        val actual = cmdLS.execute(VariableContextImpl())
+
+        var startedPath = System.getProperty("user.dir")
+        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
+                "third" + File.separator + "first" + File.separator + "second").absolutePath
+        var dirFiles = actual.first.get().split("\n")
+
+        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
+    }
+
+//  main->testForTests->empty:
+    @Test
+    fun testExecuteLsValidOfLsCommandOnTestDirSeventh() {
+        val list = File( "testForTests" + File.separator + "empty").absolutePath
+        val argsCD = listOf(list).map { Arg(it) }
+        val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
+        cmdCD.execute(VariableContextImpl())
+
+        val args = listOf<Arg>()
+        val cmdLS = CommandFactoryImpl().createCommand(CommandType.LS, args)
+        val actual = cmdLS.execute(VariableContextImpl())
+
+        var startedPath = System.getProperty("user.dir")
+        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
+                "empty").absolutePath
         var dirFiles = actual.first.get().split("\n")
 
         File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
