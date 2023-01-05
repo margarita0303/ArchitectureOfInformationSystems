@@ -8,11 +8,7 @@ import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import java.io.File
-import java.nio.file.Files
-import java.nio.file.FileSystems
 import java.util.*
-import com.architecturecourse.commandlineinterpreter.entities.command.CDCommand
-import kotlin.contracts.contract
 
 class CdTests {
 
