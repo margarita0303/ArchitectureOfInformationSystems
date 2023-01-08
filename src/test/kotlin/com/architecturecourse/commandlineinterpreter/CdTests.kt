@@ -142,9 +142,7 @@ class CdTests {
 
 
         val expected = Optional.of("червячок") to 0
-        println(expected)
         val actual = cmdCat.execute(VariableContextImpl())
-        println(actual)
         Assertions.assertEquals(expected, actual)
     }
 
