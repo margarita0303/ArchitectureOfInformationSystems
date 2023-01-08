@@ -29,7 +29,9 @@ class CDCommand(private val args: List<String>) : Command {
 
                 dirList.forEach {
                     if (it.equals("..")) {
-                        curFile = curFile.parentFile
+                        if (curFile.parentFile != null) {
+                            curFile = curFile.parentFile
+                        }
                     } else {
                         var nextFile = File(curFile.absolutePath + "/" + it)
                         if (nextFile.exists()) {
