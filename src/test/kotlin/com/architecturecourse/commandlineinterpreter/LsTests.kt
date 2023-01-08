@@ -2,6 +2,7 @@ package com.architecturecourse.commandlineinterpreter
 
 import com.architecturecourse.commandlineinterpreter.entities.commandfactory.CommandFactoryImpl
 import com.architecturecourse.commandlineinterpreter.entities.context.VariableContextImpl
+import com.architecturecourse.commandlineinterpreter.entities.singletons.SystemStateSingletonImpl
 import com.architecturecourse.commandlineinterpreter.entities.utils.Arg
 import com.architecturecourse.commandlineinterpreter.entities.utils.CommandType
 import org.junit.jupiter.api.Assertions
@@ -14,12 +15,17 @@ import java.util.*
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class LsTests {
+    var startState = System.getProperty("user.dir")
+    fun prepareState() {
+        SystemStateSingletonImpl.instance.setPath(startState)
+    }
 
 //  main->testForTests->second->first->first:
 //  --ter.txt
 //  --test.txt
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirFirst() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "second" + File.separator + "first" + File.separator + "first").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -43,6 +49,7 @@ class LsTests {
 //  --tt.txt
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirSecond() {
+        prepareState()
         val list = File( "testForTests").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -63,6 +70,7 @@ class LsTests {
 //  --test.txt
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirThird() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "first" + File.separator + "first").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -85,6 +93,7 @@ class LsTests {
 //  --gr.py
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirFourth() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "third" + File.separator + "first").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -107,6 +116,7 @@ class LsTests {
 //  --gr.py
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirFifth() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "third" + File.separator + "first").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -131,6 +141,7 @@ class LsTests {
 //  --rr.txt
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirSixth() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "third" + File.separator + "first" + File.separator
                 + "second").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
@@ -152,6 +163,7 @@ class LsTests {
 //  main->testForTests->empty:
     @Test
     fun testExecuteLsValidOfLsCommandOnTestDirSeventh() {
+        prepareState()
         val list = File( "testForTests" + File.separator + "empty").absolutePath
         val argsCD = listOf(list).map { Arg(it) }
         val cmdCD = CommandFactoryImpl().createCommand(CommandType.CD, argsCD)
@@ -165,7 +177,5 @@ class LsTests {
 
         Assertions.assertEquals(expected, actual)
     }
-
-
 
 }
