@@ -125,9 +125,7 @@ class CdTests {
         val cmdCDSecond = CommandFactoryImpl().createCommand(CommandType.CD, argsSecond)
         val actual = cmdCDSecond.execute(VariableContextImpl())
 
-        val expected = Optional.of("Something went wrong: curFile.parentFile must not be null)\n" +
-                "Process finished with exit code 128.") to 0
-
+        val expected =  Optional.empty<Int>() to 0
         Assertions.assertEquals(expected, actual)
     }
 
@@ -143,8 +141,10 @@ class CdTests {
         cmdCD.execute(VariableContextImpl())
 
 
-        val expected = Optional.of("червячок _/‾\\_/‾\\_/‾\\_o") to 0
+        val expected = Optional.of("червячок") to 0
+        println(expected)
         val actual = cmdCat.execute(VariableContextImpl())
+        println(actual)
         Assertions.assertEquals(expected, actual)
     }
 

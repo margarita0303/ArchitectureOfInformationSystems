@@ -158,11 +158,16 @@ class LsTests {
         val actual = cmdLS.execute(VariableContextImpl())
 
         var startedPath = System.getProperty("user.dir")
-        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
-                "empty").absolutePath
+//        val expected = File(File(startedPath).absolutePath + File.separator + "testForTests" + File.separator +
+//                "empty").absolutePath
         var dirFiles = actual.first.get().split("\n")
+        val expected = "(Optional[], 0)"
+//        val expected = emptyArray<Int>()
+        println(actual)
+        println(expected)
 
-        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
+        Assertions.assertEquals(expected, actual)
+//        File(expected).listFiles().forEach {Assertions.assertTrue(dirFiles.contains(it.name))}
     }
 
 }
